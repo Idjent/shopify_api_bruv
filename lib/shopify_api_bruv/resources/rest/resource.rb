@@ -16,7 +16,7 @@ module ShopifyApiBruv
           @body = body
           @query = query
 
-          validate_arguments
+          validate_arguments!
         end
 
         def request
@@ -27,7 +27,7 @@ module ShopifyApiBruv
 
         private
 
-        def validate_arguments
+        def validate_arguments!
           if [:put, :post].include?(method)
             raise Errors::ResourceError, "Argument 'body' is required for method: #{method}" if body.nil?
           end
