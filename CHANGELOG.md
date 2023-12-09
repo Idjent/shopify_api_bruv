@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [0.2.1] - 2023-12-09
+
 - Adds feature to automatically fetch the mutation object name to pre-select data
 
 ## [0.2.0] - 2023-12-09
