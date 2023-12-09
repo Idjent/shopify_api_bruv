@@ -48,7 +48,9 @@ module ShopifyApiBruv
       def validate!
         return if ok?
 
-        raise Errors::HttpResponseError, self
+        errors = body['errors'] || ''
+
+        raise Errors::HttpResponseError, errors
       end
     end
   end
