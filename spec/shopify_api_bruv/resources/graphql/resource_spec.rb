@@ -60,7 +60,7 @@ RSpec.describe(ShopifyApiBruv::Resources::Graphql::Resource) do
       resource.query = query
 
       expect(
-        resource.request(variables:, mutation_object_name: 'productCreate')
+        resource.request(variables:)
       ).not_to(be(nil))
     end
   end
