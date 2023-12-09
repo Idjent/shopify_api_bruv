@@ -1,5 +1,14 @@
 # Documentation
 
+## Environment variables
+
+```bash
+SHOPIFY_API_BRUV_LOGGER_ENABLED="true" # Enables logger, remove or set to false to disable
+SHOPIFY_API_BRUV_REQUEST_MAX_TRIES="3" # Max tries for resource class based requests
+SHOPIFY_API_BRUV_REQUEST_SLEEP_TIMER="4" # Sleep timer for resource class based requests
+SHOPIFY_API_BRUV_REQUEST_MINIMUM_CREDIT_LEFT="4" # Sleeps if credit left reaches this amount
+```
+
 ## Auth
 ```ruby
 # Initialize a config
