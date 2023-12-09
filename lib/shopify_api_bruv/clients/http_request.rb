@@ -15,7 +15,7 @@ module ShopifyApiBruv
 
         ShopifyApiBruv.logger(
           method: :info,
-          message: 'Shopify API request initiated...'
+          message: "Shopify API Request (Method: #{method}):\nPath:\n#{path}\n\nBody:\n#{body}"
         )
       end
     end
