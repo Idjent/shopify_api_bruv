@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.2.3] - 2023-12-09
+
+- Updates http response error message
+
 ## [0.2.2] - 2023-12-09
 
 - Adds page info to http response
