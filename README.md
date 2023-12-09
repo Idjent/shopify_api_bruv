@@ -3,6 +3,8 @@
 
 Bruv, how about simple configuration based API calls to Shopify ✌️
 
+Note: Most of this is based on the official and maintained [Shopify API Library](https://github.com/Shopify/shopify-api-ruby) gem by Shopify and was created mostly to make my life easier and for personal use and education.
+
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
