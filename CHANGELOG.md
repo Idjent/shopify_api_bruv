@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+## [0.2.6] - 2023-12-09
+
+- Adds pagination resource to rest resource
+- Fixes query not being forwarded
+
 ## [0.2.5] - 2023-12-09
 
 - Updates http request for better log message

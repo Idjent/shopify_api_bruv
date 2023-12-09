@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    shopify_api_bruv (0.2.5)
+    shopify_api_bruv (0.2.6)
       httparty
       logger
 
