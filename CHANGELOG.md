@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.2.4] - 2023-12-09
+
+- Updates rest resource response to include page info
+
 ## [0.2.3] - 2023-12-09
 
 - Updates http response error message

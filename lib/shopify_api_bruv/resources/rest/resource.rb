@@ -36,7 +36,9 @@ module ShopifyApiBruv
         def handle_response(response:)
           handle_response_api_limits(headers: response.headers)
 
-          response.body
+          body = response.body
+          body['page_info'] = response.page_info if body.is_a?(Hash)
+          body
         end
 
         def handle_response_api_limits(headers:)
