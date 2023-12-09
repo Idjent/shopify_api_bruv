@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.2.2] - 2023-12-09
+
+- Adds page info to http response
+
 ## [0.2.1] - 2023-12-09
 
 - Adds feature to automatically fetch the mutation object name to pre-select data
