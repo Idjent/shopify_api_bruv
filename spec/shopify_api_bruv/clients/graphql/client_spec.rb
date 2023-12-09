@@ -34,4 +34,30 @@ RSpec.describe(ShopifyApiBruv::Clients::Graphql::Client) do
       ).not_to(be(nil))
     end
   end
+
+  describe 'mutation' do
+    let(:query) do
+      <<~GRAPHQL
+        mutation productCreate($input: ProductInput!) {
+          productCreate(input: $input) {
+            product {
+              title
+            }
+            userErrors {
+              field
+              message
+            }
+          }
+        }
+      GRAPHQL
+    end
+
+    let(:variables) { { input: { title: 'Test product' } } }
+
+    it 'successfully creates a product and returns product data' do
+      expect(
+        client.request(query:, variables:)
+      ).not_to(be(nil))
+    end
+  end
 end
