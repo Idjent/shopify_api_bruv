@@ -32,9 +32,11 @@ module ShopifyApiBruv
         def request(method:, path:, body:, query:, headers:)
           http_client.request(
             http_request: HttpRequest.new(
+              api: :rest,
               method:,
               path:,
               body:,
+              query:,
               content_type: body.nil? ? nil : 'application/json',
               headers:
             )

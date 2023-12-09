@@ -31,7 +31,11 @@ module ShopifyApiBruv
           body: http_request.body
         )
 
-        HttpResponse.new(code: response.code, headers: response.headers, body: response.parsed_response)
+        if http_request.api == :rest
+          Rest::HttpResponse.new(code: response.code, headers: response.headers, body: response.parsed_response)
+        else
+          HttpResponse.new(code: response.code, headers: response.headers, body: response.parsed_response)
+        end
       end
     end
   end

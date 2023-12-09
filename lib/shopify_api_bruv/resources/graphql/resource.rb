@@ -19,13 +19,6 @@ module ShopifyApiBruv
           raise NotImplementedError, 'Please set a query in the derived class' if query.nil?
 
           response = client.request(query:, variables:)
-
-          handle_response(response:, query:, variables:, tries:)
-        end
-
-        private
-
-        def handle_response(response:, query:, variables:, tries:)
           body = response.body
 
           handle_response_errors(body:, query:, variables:, tries:)
@@ -33,6 +26,8 @@ module ShopifyApiBruv
           mutation_object_name = query.match(MUTATION_OBJECT_NAME_PATTERN)&.captures&.first
           mutation_object_name.nil? ? body['data'] : body.dig('data', mutation_object_name)
         end
+
+        private
 
         def handle_response_errors(body:, query:, variables:, tries:)
           errors = body['errors'] || body.dig('data', 'errors')

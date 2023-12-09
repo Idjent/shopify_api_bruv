@@ -3,9 +3,10 @@
 module ShopifyApiBruv
   module Clients
     class HttpRequest
-      attr_reader :method, :path, :body, :content_type, :query, :headers
+      attr_reader :api, :method, :path, :body, :content_type, :query, :headers
 
-      def initialize(method:, path:, body:, content_type:, query: nil, headers:)
+      def initialize(api:, method:, path:, body:, content_type:, query: nil, headers:)
+        @api = api
         @method = method
         @path = path
         @body = body.is_a?(Hash) ? body.to_json : body
