@@ -1,0 +1,30 @@
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+
+require:
+  - rubocop-performance
+
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'db/**/*'
+  SuggestExtensions: false
+  NewCops: enable
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: no_comma
+
+Style/ClassMethodsDefinitions:
+  EnforcedStyle: def_self
+
+Lint/MissingSuper:
+  Enabled: false
