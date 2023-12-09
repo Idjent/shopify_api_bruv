@@ -14,6 +14,7 @@ module ShopifyApiBruv
         def request(query:, variables: nil, headers: nil)
           http_client.request(
             http_request: HttpRequest.new(
+              api: :graphql,
               method: :post,
               path: '/graphql.json',
               body: { query:, variables: },

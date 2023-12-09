@@ -13,14 +13,29 @@ RSpec.describe(ShopifyApiBruv::Resources::Rest::Resource) do
     ShopifyApiBruv::Resources::Rest::Resource.new(
       config:,
       method: :get,
-      path: '/products'
+      path: '/products',
+      query: { limit: 1 }
     )
   end
 
   describe '.get' do
     it 'successfully returns product data' do
+      response_result = resource.request
+
       expect(
-        resource.request
+        response_result
+      ).not_to(be(nil))
+    end
+
+    it 'successfully returns paginated product data' do
+      response_result = resource.request
+
+      if !resource.pagination_resource.nil? && resource.pagination_resource.next_page?
+        response_result['products'].concat(resource.pagination_resource.fetch_next_page['products'])
+      end
+
+      expect(
+        response_result['products'].size >= 1
       ).not_to(be(nil))
     end
   end
