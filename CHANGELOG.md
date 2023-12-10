@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.3.3] - 2023-12-10
+
+- Updates regex to select mutation object name 
+
 ## [0.3.2] - 2023-12-10
 
 - Adds better resource class responses
