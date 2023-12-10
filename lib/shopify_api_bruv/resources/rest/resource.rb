@@ -20,7 +20,7 @@ module ShopifyApiBruv
           validate_arguments
         end
 
-        def request
+        def call
           response = client.public_send(method, path:, body:, query:)
 
           handle_response_api_limits(headers: response.headers)

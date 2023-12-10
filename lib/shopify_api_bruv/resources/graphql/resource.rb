@@ -17,7 +17,7 @@ module ShopifyApiBruv
           @query = self.class::QUERY unless self.class::QUERY.nil?
         end
 
-        def request(tries: 0)
+        def call(tries: 0)
           if query.nil?
             raise Errors::ResourceError, "Please set attribute 'query' or define constant 'QUERY' in derived class"
           end
@@ -41,7 +41,7 @@ module ShopifyApiBruv
           if errors&.any? { |error| error['message'] == 'Throttled' }
             sleep(SLEEP_TIMER)
 
-            request(variables:, tries: + 1)
+            call(tries: + 1)
           end
 
           raise Errors::ResourceError, errors unless errors.nil?
