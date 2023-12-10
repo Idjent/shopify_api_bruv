@@ -17,7 +17,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
-See [/docs](docs/README.md)
+Visit [/docs](docs/README.md)
 
 ## Development
 
