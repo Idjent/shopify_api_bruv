@@ -5,18 +5,22 @@ module ShopifyApiBruv
     module Graphql
       class Resource < Base
         attr_reader :client
-        attr_accessor :query, :variables
+        attr_accessor :variables, :query
 
+        QUERY = nil
         MAX_TRIES = ENV.fetch('SHOPIFY_API_BRUV_REQUEST_MAX_TRIES', 3).to_i
         SLEEP_TIMER = ENV.fetch('SHOPIFY_API_BRUV_REQUEST_SLEEP_TIMER', 4).to_i
 
         def initialize(config:, variables: nil)
           @client = Clients::Graphql::Client.new(config:)
           @variables = variables
+          @query = self.class::QUERY unless self.class::QUERY.nil?
         end
 
         def request(tries: 0)
-          raise NotImplementedError, "Please define 'query' in derived class" if query.nil?
+          if query.nil?
+            raise Errors::ResourceError, "Please set attribute 'query' or define constant 'QUERY' in derived class"
+          end
 
           response = client.request(query:, variables:)
           body = response.body
