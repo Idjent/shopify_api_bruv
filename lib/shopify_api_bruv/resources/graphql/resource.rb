@@ -37,7 +37,7 @@ module ShopifyApiBruv
           if errors&.any? { |error| error['message'] == 'Throttled' }
             sleep(SLEEP_TIMER)
 
-            request(tries: + 1)
+            request(variables:, tries: + 1)
           end
 
           raise Errors::ResourceError, errors unless errors.nil?

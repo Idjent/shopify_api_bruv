@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.2.7] - 2023-12-09
+
+- Fixes variables not being passed on retry
+
 ## [0.2.6] - 2023-12-09
 
 - Adds pagination resource to rest resource
