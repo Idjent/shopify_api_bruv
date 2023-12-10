@@ -23,12 +23,10 @@ module ShopifyApiBruv
           end
 
           response = client.request(query:, variables:)
-          body = response.body
 
-          handle_response_errors(body:, query:, variables:, tries:)
+          handle_response_errors(body: response.body, query:, variables:, tries:)
 
-          mutation_object_name = query.match(/mutation\s+(\w+)\s*\(.*/)&.captures&.first
-          mutation_object_name.nil? ? body['data'] : body.dig('data', mutation_object_name)
+          ResourceResponse.new(body: response.body, query:)
         end
 
         private
@@ -36,7 +34,7 @@ module ShopifyApiBruv
         def handle_response_errors(body:, query:, variables:, tries:)
           errors = body['errors'] || body.dig('data', 'errors')
 
-          raise Errors::ResourceError, errors if tries == MAX_TRIES
+          raise Errors::ResourceResponseError, errors if tries == MAX_TRIES
 
           if errors&.any? { |error| error['message'] == 'Throttled' }
             sleep(SLEEP_TIMER)
@@ -44,7 +42,7 @@ module ShopifyApiBruv
             call(tries: + 1)
           end
 
-          raise Errors::ResourceError, errors unless errors.nil?
+          raise Errors::ResourceResponseError, errors unless errors.nil?
         end
       end
     end

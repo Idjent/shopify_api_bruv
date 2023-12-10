@@ -19,7 +19,7 @@ module ShopifyApiBruv
           !page_info[:previous].nil?
         end
 
-        def purpose?
+        def page_exists?
           next_page? || previous_page?
         end
 
