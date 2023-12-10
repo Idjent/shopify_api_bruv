@@ -60,9 +60,10 @@ RSpec.describe(ShopifyApiBruv::Resources::Graphql::Resource) do
     it 'successfully creates a product and returns product data' do
       resource.query = query
       resource.variables = variables
+      response = resource.call
 
       expect(
-        resource.call
+        response
       ).not_to(be(nil))
     end
   end

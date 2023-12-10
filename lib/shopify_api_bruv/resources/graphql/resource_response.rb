@@ -19,7 +19,7 @@ module ShopifyApiBruv
         private
 
         def parse_body(body:, query:)
-          mutation_object_name = query.match(/mutation\s+(\w+)\s*\(.*/)&.captures&.first
+          mutation_object_name = query.match(/mutation.*{\s+(\w+)\s*\(/)&.captures&.first
 
           @data = mutation_object_name.nil? ? body['data'] : body.dig('data', mutation_object_name)
           @throttle_status = body.dig('extensions', 'cost', 'throttleStatus')
