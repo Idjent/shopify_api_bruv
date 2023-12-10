@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+## [0.3.0] - 2023-12-10
+
+- Refactor resource classes
+- Update docs
+
 ## [0.2.7] - 2023-12-09
 
 - Fixes variables not being passed on retry
