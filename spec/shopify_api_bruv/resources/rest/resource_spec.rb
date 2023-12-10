@@ -30,12 +30,12 @@ RSpec.describe(ShopifyApiBruv::Resources::Rest::Resource) do
     it 'successfully returns paginated product data' do
       response_result = resource.call
 
-      if !resource.pagination.nil? && resource.pagination.next_page?
-        response_result['products'].concat(resource.pagination.fetch_next_page['products'])
+      if resource&.pagination&.next_page?
+        response_result.data['products'].concat(resource.pagination.fetch_next_page.data['products'])
       end
 
       expect(
-        response_result['products'].size >= 1
+        response_result.data['products'].size >= 1
       ).not_to(be(nil))
     end
   end
