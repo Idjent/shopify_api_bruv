@@ -28,7 +28,7 @@ module ShopifyApiBruv
           pagination = Pagination.new(resource: self, page_info: response.page_info)
           @pagination = pagination if pagination.purpose?
 
-          response.body
+          Object.new(body: response.body)
         end
 
         private
