@@ -10,12 +10,12 @@ module ShopifyApiBruv
         @headers = headers
         @body = body
 
+        validate
+
         ShopifyApiBruv.logger(
           method: :info,
           message: "Shopify API Response (Code: #{code}):\nHeaders:\n#{headers}\n\nBody:\n#{body}"
         )
-
-        validate
       end
 
       private

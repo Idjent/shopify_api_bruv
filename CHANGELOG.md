@@ -1,9 +1,13 @@
 ## [Unreleased]
 
+## [0.3.1] - 2023-12-10
+
+- Adds error handling for http requests
+
 ## [0.3.0] - 2023-12-10
 
-- Refactor resource classes
-- Update docs
+- Refactors resource classes
+- Updates docs
 
 ## [0.2.7] - 2023-12-09
 

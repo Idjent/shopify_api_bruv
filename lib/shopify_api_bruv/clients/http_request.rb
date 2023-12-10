@@ -5,6 +5,13 @@ module ShopifyApiBruv
     class HttpRequest
       attr_reader :api, :method, :path, :body, :content_type, :query, :headers
 
+      VALID_METHODS = [
+        :get,
+        :delete,
+        :put,
+        :post
+      ].freeze
+
       def initialize(api:, method:, path:, body:, content_type:, query: nil, headers:)
         @api = api
         @method = method
@@ -14,10 +21,26 @@ module ShopifyApiBruv
         @query = query
         @headers = headers
 
+        validate
+
         ShopifyApiBruv.logger(
           method: :info,
           message: "Shopify API Request (Method: #{method}):\nPath:\n#{path}\n\nBody:\n#{body}"
         )
+      end
+
+      private
+
+      def validate
+        raise Errors::HttpRequestError,
+          "Invalid method #{method}, valid methods are: #{VALID_METHODS}" unless VALID_METHODS.include?(method)
+
+        raise Errors::HttpRequestError,
+          'Content-Type missing' if !body.nil? && content_type.nil?
+
+        return unless [:put, :post].include?(method)
+
+        raise Errors::HttpRequestError, "Body is required for method #{method}" if body.nil?
       end
     end
   end
