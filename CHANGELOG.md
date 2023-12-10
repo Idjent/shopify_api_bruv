@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.3.2] - 2023-12-10
+
+- Adds better resource class responses
+
 ## [0.3.1] - 2023-12-10
 
 - Adds error handling for http requests
