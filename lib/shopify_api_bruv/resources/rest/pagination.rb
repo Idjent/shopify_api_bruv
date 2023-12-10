@@ -3,7 +3,7 @@
 module ShopifyApiBruv
   module Resources
     module Rest
-      class PaginationResource
+      class Pagination
         attr_reader :resource, :page_info
 
         def initialize(resource:, page_info:)
@@ -27,14 +27,14 @@ module ShopifyApiBruv
           raise Errors::ResourceError, 'Next page cursor not found' unless next_page?
 
           resource.query[:page_info] = page_info[:next]
-          resource.request
+          resource.call
         end
 
         def fetch_previous_page
           raise Errors::ResourceError, 'Previous page cursor not found' unless previous_page?
 
           resource.query[:page_info] = page_info[:previous]
-          resource.request
+          resource.call
         end
       end
     end

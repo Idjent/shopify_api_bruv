@@ -5,10 +5,10 @@ module ShopifyApiBruv
     module Rest
       class Resource < Base
         attr_reader :client, :method, :path, :body
-        attr_accessor :query, :pagination_resource
+        attr_accessor :query, :pagination
 
-        SLEEP_TIMER = ENV.fetch('SHOPIFY_API_BRUV_REQUEST_SLEEP_TIMER', 4).to_i
-        MINIMUM_CREDIT_LEFT = ENV.fetch('SHOPIFY_API_BRUV_REQUEST_MINIMUM_CREDIT_LEFT', 4).to_i
+        SLEEP_TIMER = ENV.fetch('SHOPIFY_API_BRUV_RESOURCE_REST_SLEEP_TIMER', 4).to_i
+        CREDIT_LEFT_THRESHOLD = ENV.fetch('SHOPIFY_API_BRUV_RESOURCE_REST_CREDIT_LEFT_THRESHOLD', 8).to_i
 
         def initialize(config:, method:, path:, body: nil, query: nil)
           @client = Clients::Rest::Client.new(config:)
@@ -20,13 +20,13 @@ module ShopifyApiBruv
           validate_arguments
         end
 
-        def request
+        def call
           response = client.public_send(method, path:, body:, query:)
 
           handle_response_api_limits(headers: response.headers)
 
-          pagination_resource = PaginationResource.new(resource: self, page_info: response.page_info)
-          @pagination_resource = pagination_resource if pagination_resource.purpose?
+          pagination = Pagination.new(resource: self, page_info: response.page_info)
+          @pagination = pagination if pagination.purpose?
 
           response.body
         end
@@ -45,7 +45,7 @@ module ShopifyApiBruv
           limit = api_call_limit_header.pop.to_i - 1
           used = api_call_limit_header.shift.to_i
 
-          if (limit - used) <= MINIMUM_CREDIT_LEFT
+          if (limit - used) <= CREDIT_LEFT_THRESHOLD
             sleep(SLEEP_TIMER)
           end
         end

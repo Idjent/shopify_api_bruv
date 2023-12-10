@@ -20,7 +20,7 @@ RSpec.describe(ShopifyApiBruv::Resources::Rest::Resource) do
 
   describe '.get' do
     it 'successfully returns product data' do
-      response_result = resource.request
+      response_result = resource.call
 
       expect(
         response_result
@@ -28,10 +28,10 @@ RSpec.describe(ShopifyApiBruv::Resources::Rest::Resource) do
     end
 
     it 'successfully returns paginated product data' do
-      response_result = resource.request
+      response_result = resource.call
 
-      if !resource.pagination_resource.nil? && resource.pagination_resource.next_page?
-        response_result['products'].concat(resource.pagination_resource.fetch_next_page['products'])
+      if !resource.pagination.nil? && resource.pagination.next_page?
+        response_result['products'].concat(resource.pagination.fetch_next_page['products'])
       end
 
       expect(

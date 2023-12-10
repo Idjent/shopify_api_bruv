@@ -5,25 +5,29 @@ module ShopifyApiBruv
     module Graphql
       class Resource < Base
         attr_reader :client
-        attr_accessor :query
+        attr_accessor :variables, :query
 
-        MAX_TRIES = ENV.fetch('SHOPIFY_API_BRUV_REQUEST_MAX_TRIES', 3).to_i
-        SLEEP_TIMER = ENV.fetch('SHOPIFY_API_BRUV_REQUEST_SLEEP_TIMER', 4).to_i
-        MUTATION_OBJECT_NAME_PATTERN = /mutation\s+(\w+)\s*\(.*/
+        QUERY = nil
+        MAX_TRIES = ENV.fetch('SHOPIFY_API_BRUV_RESOURCE_GRAPHQL_MAX_TRIES', 3).to_i
+        SLEEP_TIMER = ENV.fetch('SHOPIFY_API_BRUV_RESOURCE_GRAPHQL_SLEEP_TIMER', 4).to_i
 
-        def initialize(config:)
+        def initialize(config:, variables: nil)
           @client = Clients::Graphql::Client.new(config:)
+          @variables = variables
+          @query = self.class::QUERY unless self.class::QUERY.nil?
         end
 
-        def request(variables: nil, tries: 0)
-          raise NotImplementedError, 'Please set a query in the derived class' if query.nil?
+        def call(tries: 0)
+          if query.nil?
+            raise Errors::ResourceError, "Please set attribute 'query' or define constant 'QUERY' in derived class"
+          end
 
           response = client.request(query:, variables:)
           body = response.body
 
           handle_response_errors(body:, query:, variables:, tries:)
 
-          mutation_object_name = query.match(MUTATION_OBJECT_NAME_PATTERN)&.captures&.first
+          mutation_object_name = query.match(/mutation\s+(\w+)\s*\(.*/)&.captures&.first
           mutation_object_name.nil? ? body['data'] : body.dig('data', mutation_object_name)
         end
 
@@ -37,7 +41,7 @@ module ShopifyApiBruv
           if errors&.any? { |error| error['message'] == 'Throttled' }
             sleep(SLEEP_TIMER)
 
-            request(variables:, tries: + 1)
+            call(tries: + 1)
           end
 
           raise Errors::ResourceError, errors unless errors.nil?

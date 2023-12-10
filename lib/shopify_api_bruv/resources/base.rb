@@ -3,8 +3,8 @@
 module ShopifyApiBruv
   module Resources
     class Base
-      def self.request(...)
-        new(...).request
+      def self.call(...)
+        new(...).call
       end
     end
   end
