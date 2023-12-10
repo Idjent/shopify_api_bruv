@@ -8,8 +8,8 @@ module ShopifyApiBruv
         attr_accessor :variables, :query
 
         QUERY = nil
-        MAX_TRIES = ENV.fetch('SHOPIFY_API_BRUV_REQUEST_MAX_TRIES', 3).to_i
-        SLEEP_TIMER = ENV.fetch('SHOPIFY_API_BRUV_REQUEST_SLEEP_TIMER', 4).to_i
+        MAX_TRIES = ENV.fetch('SHOPIFY_API_BRUV_RESOURCE_GRAPHQL_MAX_TRIES', 3).to_i
+        SLEEP_TIMER = ENV.fetch('SHOPIFY_API_BRUV_RESOURCE_GRAPHQL_SLEEP_TIMER', 4).to_i
 
         def initialize(config:, variables: nil)
           @client = Clients::Graphql::Client.new(config:)
