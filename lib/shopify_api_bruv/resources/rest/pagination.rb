@@ -3,7 +3,7 @@
 module ShopifyApiBruv
   module Resources
     module Rest
-      class PaginationResource
+      class Pagination
         attr_reader :resource, :page_info
 
         def initialize(resource:, page_info:)

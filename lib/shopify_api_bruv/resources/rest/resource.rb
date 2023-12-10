@@ -5,7 +5,7 @@ module ShopifyApiBruv
     module Rest
       class Resource < Base
         attr_reader :client, :method, :path, :body
-        attr_accessor :query, :pagination_resource
+        attr_accessor :query, :pagination
 
         SLEEP_TIMER = ENV.fetch('SHOPIFY_API_BRUV_REQUEST_SLEEP_TIMER', 4).to_i
         MINIMUM_CREDIT_LEFT = ENV.fetch('SHOPIFY_API_BRUV_REQUEST_MINIMUM_CREDIT_LEFT', 4).to_i
@@ -25,8 +25,8 @@ module ShopifyApiBruv
 
           handle_response_api_limits(headers: response.headers)
 
-          pagination_resource = PaginationResource.new(resource: self, page_info: response.page_info)
-          @pagination_resource = pagination_resource if pagination_resource.purpose?
+          pagination = Pagination.new(resource: self, page_info: response.page_info)
+          @pagination = pagination if pagination.purpose?
 
           response.body
         end

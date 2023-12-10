@@ -5,25 +5,25 @@ module ShopifyApiBruv
     module Graphql
       class Resource < Base
         attr_reader :client
-        attr_accessor :query
+        attr_accessor :query, :variables
 
         MAX_TRIES = ENV.fetch('SHOPIFY_API_BRUV_REQUEST_MAX_TRIES', 3).to_i
         SLEEP_TIMER = ENV.fetch('SHOPIFY_API_BRUV_REQUEST_SLEEP_TIMER', 4).to_i
-        MUTATION_OBJECT_NAME_PATTERN = /mutation\s+(\w+)\s*\(.*/
 
-        def initialize(config:)
+        def initialize(config:, variables: nil)
           @client = Clients::Graphql::Client.new(config:)
+          @variables = variables
         end
 
-        def request(variables: nil, tries: 0)
-          raise NotImplementedError, 'Please set a query in the derived class' if query.nil?
+        def request(tries: 0)
+          raise NotImplementedError, "Please define 'query' in derived class" if query.nil?
 
           response = client.request(query:, variables:)
           body = response.body
 
           handle_response_errors(body:, query:, variables:, tries:)
 
-          mutation_object_name = query.match(MUTATION_OBJECT_NAME_PATTERN)&.captures&.first
+          mutation_object_name = query.match(/mutation\s+(\w+)\s*\(.*/)&.captures&.first
           mutation_object_name.nil? ? body['data'] : body.dig('data', mutation_object_name)
         end
 
